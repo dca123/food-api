@@ -1,2 +1,11 @@
 class Ingredient < ApplicationRecord
+  has_many :recipes, dependent: :destroy
+  has_many :meals, through: :recipes
+
+  validates_presence_of :name
+  validates_presence_of :location
+
+  validates_uniqueness_of :name
+
+  enum location: [:walmart, :aldi, :other]
 end
