@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_092612) do
     t.integer "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_ingredients_on_name", unique: true
   end
 
   create_table "meals", force: :cascade do |t|
@@ -25,6 +26,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_092612) do
     t.integer "serves"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_meals_on_name", unique: true
   end
 
   create_table "recipes", force: :cascade do |t|
@@ -35,6 +37,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_092612) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_recipes_on_ingredient_id"
+    t.index ["meal_id", "ingredient_id"], name: "index_recipes_on_meal_id_and_ingredient_id", unique: true
     t.index ["meal_id"], name: "index_recipes_on_meal_id"
   end
 
