@@ -11,32 +11,27 @@
 # enum location: [:walmart, :aldi, :other]
 # enum measure: [:kg, :g, :box]
 
-20.times do
+30.times do
   ingredient_name = Faker::Food.ingredient
-  loop do
+  while Ingredient.exists?(name: ingredient_name)
     ingredient_name = Faker::Food.ingredient
-    break if !(Ingredient.find_by name:ingredient_name)
   end
   Ingredient.create(name: ingredient_name, location: rand(0..2))
 end
 
-10.times do
+30.times do
   dish_name = Faker::Food.dish
-  loop do
+  while Meal.exists?(name: dish_name)
     dish_name = Faker::Food.dish
-    break if !(Meal.find_by name:dish_name)
   end
-  Meal.create(name: dish_name, notes: Faker::Food.description, serves: rand(10..15))
-end
+  myMeal = Meal.create(name: dish_name, notes: Faker::Food.description, serves: rand(10..15))
 
-
-50.times do
-  ingredient_id = rand(1..20)
-  meal_id = rand(1..10)
-  loop do
+  rand(5...15).times do
     ingredient_id = rand(1..20)
-    meal_id = rand(1..10)
-    break if !(Recipe.find_by meal_id: meal_id, ingredient_id: ingredient_id)
+    meal_id = myMeal.id
+    while Recipe.exists?(ingredient_id: ingredient_id, meal_id: meal_id)
+      ingredient_id = rand(1..20)
+    end
+    Recipe.create(meal_id: meal_id, ingredient_id: ingredient_id, quantity: rand(5..15), measure: rand(0..2))
   end
-  Recipe.create(meal_id: meal_id, ingredient_id: ingredient_id, quantity: rand(5..15), measure: rand(0..2))
 end

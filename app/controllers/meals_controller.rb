@@ -3,14 +3,18 @@ class MealsController < ApplicationController
 
   # GET /meals
   def index
-    @meals = Meal.all
+    if params[:page]
+      @meals = Meal.page(params[:page][:number]).per(params[:page][:size])
+    else
+      @meals = Meal.all
+    end
 
-    render json: @meals
+    render json: @meals,include: ['recipes', 'ingredients']
   end
 
   # GET /meals/1
   def show
-    render json: @meal
+    render json: @meal,include: ['recipes', 'ingredients']
   end
 
   # POST /meals

@@ -25,7 +25,8 @@ gem 'puma', '~> 3.11'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'faker'
-gem 'active_model_serializers', '~> 0.10.2'
+gem "active_model_serializers", github: "rails-api/active_model_serializers", tag: "v0.10.0.rc4"
+gem "kaminari"
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
