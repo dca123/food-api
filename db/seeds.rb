@@ -24,7 +24,7 @@ end
   while Meal.exists?(name: dish_name)
     dish_name = Faker::Food.dish
   end
-  myMeal = Meal.create(name: dish_name, notes: Faker::Food.description, serves: rand(10..15))
+  myMeal = Meal.create(name: dish_name, notes: Faker::Food.description, serves: rand(10..15), category: rand(0..4))
 
   rand(5...15).times do
     ingredient_id = rand(1..20)

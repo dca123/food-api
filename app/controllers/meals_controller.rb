@@ -8,6 +8,10 @@ class MealsController < ApplicationController
     else
       @meals = Meal.all
     end
+    puts @meals
+    if !(params[:category].empty?)
+      @meals = @meals.where(category: params[:category]);
+    end
 
     render json: @meals,include: ['recipes', 'ingredients']
   end

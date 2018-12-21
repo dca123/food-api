@@ -4,6 +4,7 @@ class CreateMeals < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :notes
       t.integer :serves
+      t.integer :category
 
       t.timestamps
     end

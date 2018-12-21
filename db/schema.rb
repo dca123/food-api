@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_092612) do
     t.string "name"
     t.string "notes"
     t.integer "serves"
+    t.integer "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_meals_on_name", unique: true
