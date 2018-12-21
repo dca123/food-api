@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_092612) do
+ActiveRecord::Schema.define(version: 2018_12_21_052226) do
 
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(version: 2018_12_19_092612) do
     t.index ["name"], name: "index_meals_on_name", unique: true
   end
 
+  create_table "menus", force: :cascade do |t|
+    t.integer "week_id"
+    t.integer "day"
+    t.integer "mealTime"
+    t.integer "meal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meal_id"], name: "index_menus_on_meal_id"
+    t.index ["week_id", "day", "mealTime", "meal_id"], name: "index_menus_on_week_id_and_day_and_mealTime_and_meal_id", unique: true
+    t.index ["week_id"], name: "index_menus_on_week_id"
+  end
+
   create_table "recipes", force: :cascade do |t|
     t.integer "meal_id"
     t.integer "ingredient_id"
@@ -40,6 +52,19 @@ ActiveRecord::Schema.define(version: 2018_12_19_092612) do
     t.index ["ingredient_id"], name: "index_recipes_on_ingredient_id"
     t.index ["meal_id", "ingredient_id"], name: "index_recipes_on_meal_id_and_ingredient_id", unique: true
     t.index ["meal_id"], name: "index_recipes_on_meal_id"
+  end
+
+  create_table "weeks", force: :cascade do |t|
+    t.integer "weekOf"
+    t.integer "year"
+    t.integer "month"
+    t.decimal "cost", precision: 6, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["month"], name: "index_weeks_on_month"
+    t.index ["weekOf", "year"], name: "index_weeks_on_weekOf_and_year", unique: true
+    t.index ["weekOf"], name: "index_weeks_on_weekOf"
+    t.index ["year"], name: "index_weeks_on_year"
   end
 
 end

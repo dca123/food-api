@@ -35,3 +35,19 @@ end
     Recipe.create(meal_id: meal_id, ingredient_id: ingredient_id, quantity: rand(5..15), measure: rand(0..2))
   end
 end
+
+20.times do |count|
+  myWeek = Week.create(weekOf: count +1, year: 2018, month: Date.commercial(2018, count + 1).month, cost: rand(30.00...200.99))
+  5.times do |weekDay|
+    2.times do |mealT|
+      rand(1..3).times do
+        meal_id = rand(1..25)
+        while Menu.exists?(week: myWeek.id, day: weekDay, mealTime: mealT, meal: meal_id)
+          meal_id = rand(1..25)
+        end
+        puts "count #{myWeek.id} weekDay #{weekDay} mealT #{mealT} meal_id #{meal_id}"
+        Menu.create(week_id: myWeek.id, day: weekDay, mealTime: mealT, meal_id: meal_id)
+      end
+    end
+  end
+end
