@@ -18,7 +18,7 @@ class MealsController < ApplicationController
 
   # GET /meals/1
   def show
-    render json: @meal,include: ['recipes', 'ingredients']
+    render json: @meal, include: ['recipes', 'ingredients']
   end
 
   # POST /meals

@@ -3,8 +3,19 @@ class WeeksController < ApplicationController
 
   # GET /weeks
   def index
-    @weeks = Week.all
-
+    if params[:page]
+      @weeks = Week.order('year DESC, month DESC').page(params[:page][:number]).per(params[:page][:size])
+    else
+      @weeks = Week.all
+    end
+    if !(params[:month].empty?)
+      @weeks = @weeks.where(month: params[:month]);
+      # @weeks = @weeks.sort_by { |week| [week.year, week.weekOf]}.reverse
+    end
+    # if !(params[:year].empty?)
+    #   @weeks = @weeks.where(year: params[:year]);
+    #   @weeks = @weeks.sort_by { |week| [week.month, week.weekOf]}.reverse
+    # end
     render json: @weeks
   end
 
