@@ -8,7 +8,7 @@ class MenusController < ApplicationController
     else
       @menus = Menu.all
     end
-    render json: @menus, include: ['meal']
+    render json: @menus, include: ['meal','recipes','ingredients']
   end
 
   # GET /menus/1
