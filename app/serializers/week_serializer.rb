@@ -1,3 +1,4 @@
 class WeekSerializer < ActiveModel::Serializer
-  attributes :id, :weekOf, :year, :month, :cost
+  attributes :id, :week_of, :year, :month, :cost
+  has_many :menus
 end

@@ -15,13 +15,15 @@ class RecipesController < ApplicationController
 
   # POST /recipes
   def create
-    @recipe = Recipe.new(recipe_params)
-
-    if @recipe.save
-      render json: @recipe, status: :created, location: @recipe
-    else
-      render json: @recipe.errors, status: :unprocessable_entity
-    end
+    puts "params"
+    puts params
+    # @recipe = Recipe.new(recipe_params)
+    #
+    # if @recipe.save
+    #   render json: @recipe, status: :created, location: @recipe
+    # else
+    #   render json: @recipe.errors, status: :unprocessable_entity
+    # end
   end
 
   # PATCH/PUT /recipes/1

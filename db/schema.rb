@@ -33,12 +33,12 @@ ActiveRecord::Schema.define(version: 2018_12_21_052226) do
   create_table "menus", force: :cascade do |t|
     t.integer "week_id"
     t.integer "day"
-    t.integer "mealTime"
+    t.integer "meal_time"
     t.integer "meal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meal_id"], name: "index_menus_on_meal_id"
-    t.index ["week_id", "day", "mealTime", "meal_id"], name: "index_menus_on_week_id_and_day_and_mealTime_and_meal_id", unique: true
+    t.index ["week_id", "day", "meal_time", "meal_id"], name: "index_menus_on_week_id_and_day_and_meal_time_and_meal_id", unique: true
     t.index ["week_id"], name: "index_menus_on_week_id"
   end
 
@@ -55,15 +55,15 @@ ActiveRecord::Schema.define(version: 2018_12_21_052226) do
   end
 
   create_table "weeks", force: :cascade do |t|
-    t.integer "weekOf"
+    t.integer "week_of"
     t.integer "year"
     t.integer "month"
     t.decimal "cost", precision: 6, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["month"], name: "index_weeks_on_month"
-    t.index ["weekOf", "year"], name: "index_weeks_on_weekOf_and_year", unique: true
-    t.index ["weekOf"], name: "index_weeks_on_weekOf"
+    t.index ["week_of", "year"], name: "index_weeks_on_week_of_and_year", unique: true
+    t.index ["week_of"], name: "index_weeks_on_week_of"
     t.index ["year"], name: "index_weeks_on_year"
   end
 

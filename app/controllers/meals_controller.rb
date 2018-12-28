@@ -13,7 +13,7 @@ class MealsController < ApplicationController
       @meals = @meals.where(category: params[:category]);
     end
 
-    render json: @meals,include: ['recipes', 'ingredients']
+    render json: @meals
   end
 
   # GET /meals/1

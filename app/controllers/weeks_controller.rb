@@ -10,11 +10,11 @@ class WeeksController < ApplicationController
     end
     if !(params[:month].empty?)
       @weeks = @weeks.where(month: params[:month]);
-      # @weeks = @weeks.sort_by { |week| [week.year, week.weekOf]}.reverse
+      @weeks = @weeks.sort_by { |week| [week.year, week.week_of]}.reverse
     end
     # if !(params[:year].empty?)
     #   @weeks = @weeks.where(year: params[:year]);
-    #   @weeks = @weeks.sort_by { |week| [week.month, week.weekOf]}.reverse
+    #   @weeks = @weeks.sort_by { |week| [week.month, week.week_of]}.reverse
     # end
     render json: @weeks
   end
@@ -26,6 +26,7 @@ class WeeksController < ApplicationController
 
   # POST /weeks
   def create
+    puts week_params
     @week = Week.new(week_params)
 
     if @week.save
@@ -57,6 +58,6 @@ class WeeksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def week_params
-      params.require(:week).permit(:weekOf, :year, :month, :cost)
+      ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:week_of, :year, :month, :cost] )
     end
 end

@@ -5,5 +5,5 @@ class Menu < ApplicationRecord
   has_many :recipes, through: :meal
 
   enum day: [:monday, :tuesday, :wednesday, :thursday, :friday]
-  enum mealTime: [:lunch, :dinner]
+  enum meal_time: [:lunch, :dinner]
 end

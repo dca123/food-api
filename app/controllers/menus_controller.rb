@@ -8,7 +8,7 @@ class MenusController < ApplicationController
     else
       @menus = Menu.all
     end
-    render json: @menus, include: ['meal','recipes','ingredients']
+    render json: @menus, include: ['meal']
   end
 
   # GET /menus/1
@@ -18,6 +18,7 @@ class MenusController < ApplicationController
 
   # POST /menus
   def create
+    puts menu_params
     @menu = Menu.new(menu_params)
 
     if @menu.save
@@ -49,6 +50,6 @@ class MenusController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def menu_params
-      params.require(:menu).permit(:week_id, :day, :mealTime, :meal_id)
+      ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:week, :day, :meal_time, :meal] )
     end
 end
