@@ -1,6 +1,20 @@
 class MealsController < ApplicationController
   before_action :set_meal, only: [:show, :update, :destroy]
 
+  #GET /meals/list
+  def list
+    categories = Meal.distinct.pluck(:category)
+    meal_list = []
+    categories.each { |category|
+      obj = {
+        groupName: category.capitalize,
+        options: Meal.where(category: category).select(:id, :name)
+      }
+      meal_list.push(obj)
+      }
+
+    render json: meal_list
+  end
   # GET /meals
   def index
     if params[:page]
@@ -8,7 +22,6 @@ class MealsController < ApplicationController
     else
       @meals = Meal.all
     end
-    puts @meals
     if !(params[:category].empty?)
       @meals = @meals.where(category: params[:category]);
     end

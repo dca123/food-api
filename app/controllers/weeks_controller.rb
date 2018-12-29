@@ -26,7 +26,6 @@ class WeeksController < ApplicationController
 
   # POST /weeks
   def create
-    puts week_params
     @week = Week.new(week_params)
 
     if @week.save

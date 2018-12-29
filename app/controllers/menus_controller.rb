@@ -18,7 +18,6 @@ class MenusController < ApplicationController
 
   # POST /menus
   def create
-    puts menu_params
     @menu = Menu.new(menu_params)
 
     if @menu.save
