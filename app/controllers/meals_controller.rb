@@ -11,21 +11,19 @@ class MealsController < ApplicationController
         options: Meal.where(category: category).select(:id, :name)
       }
       meal_list.push(obj)
-      }
+    }
 
     render json: meal_list
   end
   # GET /meals
   def index
+    @meals = Meal.where(nil)
+    @meals = @meals.category(params[:category]) if params[:category].present?
     if params[:page]
-      @meals = Meal.page(params[:page][:number]).per(params[:page][:size])
+      @meals = @meals.page(params[:page][:number]).per(params[:page][:size])
     else
-      @meals = Meal.all
+      @meals = @meals.all
     end
-    if !(params[:category].empty?)
-      @meals = @meals.where(category: params[:category]);
-    end
-
     render json: @meals
   end
 

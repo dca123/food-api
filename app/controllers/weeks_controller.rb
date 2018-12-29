@@ -1,22 +1,20 @@
 class WeeksController < ApplicationController
   before_action :set_week, only: [:show, :update, :destroy]
 
+  def list
+    years = ['All', Week.distinct.pluck(:year).map(&:to_s)].flatten
+    render json: years
+  end
+
   # GET /weeks
   def index
+    @weeks = Week.where(nil)
     if params[:page]
-      @weeks = Week.order('year DESC, month DESC').page(params[:page][:number]).per(params[:page][:size])
-    else
-      @weeks = Week.all
+      @weeks = @weeks.page(params[:page][:number]).per(params[:page][:size])
     end
-    if !(params[:month].empty?)
-      @weeks = @weeks.where(month: params[:month]);
-      @weeks = @weeks.sort_by { |week| [week.year, week.week_of]}.reverse
-    end
-    # if !(params[:year].empty?)
-    #   @weeks = @weeks.where(year: params[:year]);
-    #   @weeks = @weeks.sort_by { |week| [week.month, week.week_of]}.reverse
-    # end
-    render json: @weeks
+    @weeks = @weeks.month(params[:month]) if params[:month].present?
+    @weeks = @weeks.year(params[:year]) if params[:year].present?
+    render json: @weeks.order(year: :desc, month: :desc, week_of: :desc)
   end
 
   # GET /weeks/1
