@@ -5,6 +5,11 @@ class MenusController < ApplicationController
   def index
     if params[:week]
       @menus = Menu.where(week_id: params[:week])
+    elsif params[:week_id]
+      puts params
+      @menus = Menu.where(week_id: params[:week_id], meal_id: params[:meal_id], day: params[:day], meal_time: params[:meal_time])
+      render json: @menus
+      return
     else
       @menus = Menu.all
     end
@@ -13,6 +18,8 @@ class MenusController < ApplicationController
 
   # GET /menus/1
   def show
+    puts params
+
     render json: @menu
   end
 
