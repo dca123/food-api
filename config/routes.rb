@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  resources :weeks
-  resources :menus
-  resources :meals do
+  resources :weeks do
+    get 'shopping_list', on: :member
   end
+  resources :menus
+  resources :meals
   resources :ingredients
   resources :recipes
   get 'meal_list', to: 'meals#list'

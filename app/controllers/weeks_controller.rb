@@ -1,6 +1,28 @@
 class WeeksController < ApplicationController
   before_action :set_week, only: [:show, :update, :destroy]
 
+  def shopping_list
+    @week = Week.find(params[:id])
+    shoppingList = Hash.new
+    Ingredient.locations.each_key do |location|
+      shoppingList[location] = Hash.new
+    end
+    @week.menus.each do |menu|
+      menu.meal.recipes.each do |recipe|
+        ingredient = recipe.ingredient
+        if shoppingList[ingredient.location].key?(ingredient.name)
+          shoppingList[ingredient.location][ingredient.name][:quantity] += recipe.quantity
+        else
+          shoppingList[ingredient.location][ingredient.name] = Hash.new
+          shoppingList[ingredient.location][ingredient.name][:quantity] = recipe.quantity
+          shoppingList[ingredient.location][ingredient.name][:measure] = recipe.measure
+        end
+        shoppingList[ingredient.location] = shoppingList[ingredient.location].sort.to_h
+      end
+    end
+    render json: shoppingList
+  end
+
   def list
     years = ['All', Week.distinct.pluck(:year).map(&:to_s)].flatten
     render json: years

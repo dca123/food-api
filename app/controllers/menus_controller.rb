@@ -1,15 +1,11 @@
 class MenusController < ApplicationController
   before_action :set_menu, only: [:show, :update, :destroy]
-
+  
   # GET /menus
   def index
+    @menus = Menu.where(nil)
     if params[:week]
-      @menus = Menu.where(week_id: params[:week])
-    elsif params[:week_id]
-      puts params
-      @menus = Menu.where(week_id: params[:week_id], meal_id: params[:meal_id], day: params[:day], meal_time: params[:meal_time])
-      render json: @menus
-      return
+      @menus = Menu.week(params[:week])
     else
       @menus = Menu.all
     end

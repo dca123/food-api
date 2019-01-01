@@ -6,4 +6,6 @@ class Menu < ApplicationRecord
 
   enum day: [:monday, :tuesday, :wednesday, :thursday, :friday]
   enum meal_time: [:lunch, :dinner]
+
+  scope :week, ->(week_id) {where week_id: week_id}
 end

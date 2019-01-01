@@ -8,5 +8,5 @@ class Recipe < ApplicationRecord
 
   validates_uniqueness_of :meal_id, scope: :ingredient_id
 
-  enum measure: [:box, :grams, :kilograms]
+  enum measure: [:box, :gram, :kilogram]
 end

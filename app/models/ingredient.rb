@@ -8,4 +8,7 @@ class Ingredient < ApplicationRecord
   validates_uniqueness_of :name
 
   enum location: [:walmart, :aldi, :other]
+
+  scope :location, -> (location) {where location: location}
+
 end
