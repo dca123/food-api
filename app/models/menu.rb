@@ -4,6 +4,8 @@ class Menu < ApplicationRecord
   has_many :ingredients, through: :meal
   has_many :recipes, through: :meal
 
+  validates_uniqueness_of :meal_id, scope: [:week_id, :day, :meal_time]
+
   enum day: [:monday, :tuesday, :wednesday, :thursday, :friday]
   enum meal_time: [:lunch, :dinner]
 
