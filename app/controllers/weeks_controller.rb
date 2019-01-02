@@ -51,7 +51,9 @@ class WeeksController < ApplicationController
     if @week.save
       render json: @week, status: :created, location: @week
     else
-      render json: @week.errors, status: :unprocessable_entity
+      @correct_week = Week.week_of(week_params[:week_of], week_params[:month], week_params[:year])
+      puts @correct_week
+      render json: {errors: [@week.errors.to_h, {week_id: @correct_week.take.id}]}, status: :unprocessable_entity
     end
   end
 

@@ -38,7 +38,8 @@ end
 
 3.times do |thisYear|
   20.times do |count|
-    myWeek = Week.create(week_of: count +1, year: 2017+thisYear, month: Date.commercial(2018, count + 1).month, cost: rand(30.00...200.99))
+    date = Date.commercial(2017 + thisYear, count + 1)
+    myWeek = Week.create(week_of: date.day, year: 2017+thisYear, month: date.month, cost: rand(30.00...200.99))
     5.times do |weekDay|
       2.times do |mealT|
         rand(1..3).times do

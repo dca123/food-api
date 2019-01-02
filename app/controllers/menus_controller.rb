@@ -26,7 +26,7 @@ class MenusController < ApplicationController
     if @menu.save
       render json: @menu, status: :created, location: @menu
     else
-      render json: @menu.errors, status: :unprocessable_entity
+      render json: {errors: [@menu.errors]}, status: :unprocessable_entity
     end
   end
 
