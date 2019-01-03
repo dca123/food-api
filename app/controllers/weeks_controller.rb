@@ -11,11 +11,27 @@ class WeeksController < ApplicationController
       menu.meal.recipes.each do |recipe|
         ingredient = recipe.ingredient
         if shoppingList[ingredient.location].key?(ingredient.name)
-          shoppingList[ingredient.location][ingredient.name][:quantity] += recipe.quantity
+          added = false
+          shoppingList[ingredient.location][ingredient.name].each do |quant|
+            puts quant[:measure]
+            puts recipe.measure
+            if quant[:measure] == recipe.measure
+              quant[:quantity] += recipe.quantity
+              added = true
+            end
+          end
+          if !added
+            data = Hash.new
+            data[:quantity] = recipe.quantity
+            data[:measure] = recipe.measure
+            shoppingList[ingredient.location][ingredient.name].push(data)
+          end
         else
-          shoppingList[ingredient.location][ingredient.name] = Hash.new
-          shoppingList[ingredient.location][ingredient.name][:quantity] = recipe.quantity
-          shoppingList[ingredient.location][ingredient.name][:measure] = recipe.measure
+          shoppingList[ingredient.location][ingredient.name] = []
+          data = Hash.new
+          data[:quantity] = recipe.quantity
+          data[:measure] = recipe.measure
+          shoppingList[ingredient.location][ingredient.name].push(data)
         end
         shoppingList[ingredient.location] = shoppingList[ingredient.location].sort.to_h
       end
@@ -52,7 +68,6 @@ class WeeksController < ApplicationController
       render json: @week, status: :created, location: @week
     else
       @correct_week = Week.week_of(week_params[:week_of], week_params[:month], week_params[:year])
-      puts @correct_week
       render json: {errors: [@week.errors.to_h, {week_id: @correct_week.take.id}]}, status: :unprocessable_entity
     end
   end
