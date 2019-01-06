@@ -41,7 +41,11 @@ class MenusController < ApplicationController
 
   # DELETE /menus/1
   def destroy
+    week = Week.find(@menu.week_id)
     @menu.destroy
+    unless week.menus.any?
+      week.destroy
+    end
   end
 
   private

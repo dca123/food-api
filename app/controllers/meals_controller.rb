@@ -65,6 +65,6 @@ class MealsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def meal_params
-      params.require(:meal).permit(:name, :notes, :serves)
+      ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:name, :notes, :category, :serves])
     end
 end

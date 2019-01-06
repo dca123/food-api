@@ -5,7 +5,7 @@ class CreateMeals < ActiveRecord::Migration[5.2]
       t.string :notes
       t.integer :serves
       t.integer :category
-
+      
       t.timestamps
     end
     add_index :meals, [:name], unique: true

@@ -1,6 +1,11 @@
 class IngredientsController < ApplicationController
   before_action :set_ingredient, only: [:show, :update, :destroy]
 
+  #GET /ingredients/list
+  def list
+    list = Ingredient.distinct.select(:id, :name).order(:name).to_json
+    render json: list
+  end
   # GET /ingredients
   def index
     @ingredients = Ingredient.all
@@ -46,6 +51,6 @@ class IngredientsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def ingredient_params
-      params.require(:ingredient).permit(:name, :location)
+      ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:name, :location])
     end
 end
