@@ -24,7 +24,7 @@ class RecipesController < ApplicationController
     if @recipe.save
       render json: @recipe, status: :created, location: @recipe
     else
-      render json: @recipe.errors, status: :unprocessable_entity
+      render json: error_jsonapi(@recipe), status: :unprocessable_entity
     end
   end
 
