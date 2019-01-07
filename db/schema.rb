@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_21_052226) do
+ActiveRecord::Schema.define(version: 2018_12_21_050617) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
@@ -31,10 +34,10 @@ ActiveRecord::Schema.define(version: 2018_12_21_052226) do
   end
 
   create_table "menus", force: :cascade do |t|
-    t.integer "week_id"
+    t.bigint "week_id"
     t.integer "day"
     t.integer "meal_time"
-    t.integer "meal_id"
+    t.bigint "meal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meal_id"], name: "index_menus_on_meal_id"
@@ -43,8 +46,8 @@ ActiveRecord::Schema.define(version: 2018_12_21_052226) do
   end
 
   create_table "recipes", force: :cascade do |t|
-    t.integer "meal_id"
-    t.integer "ingredient_id"
+    t.bigint "meal_id"
+    t.bigint "ingredient_id"
     t.integer "quantity"
     t.integer "measure"
     t.datetime "created_at", null: false
@@ -67,4 +70,8 @@ ActiveRecord::Schema.define(version: 2018_12_21_052226) do
     t.index ["year"], name: "index_weeks_on_year"
   end
 
+  add_foreign_key "menus", "meals"
+  add_foreign_key "menus", "weeks"
+  add_foreign_key "recipes", "ingredients"
+  add_foreign_key "recipes", "meals"
 end
