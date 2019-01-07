@@ -8,5 +8,6 @@ class Recipe < ApplicationRecord
 
   validates_uniqueness_of :meal_id, scope: :ingredient_id
 
-  enum measure: [:box, :gram, :kilogram]
+  enum measure: [:teaspoon, :tablespoon, :fluid_Oz, :cup, :quart, :litre,
+    :pound, :ounce, :gram, :package, :bag, :bottle, :piece, :can, :jar, :unit, :container]
 end

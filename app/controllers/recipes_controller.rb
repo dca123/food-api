@@ -1,7 +1,10 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :update, :destroy]
 
-
+  def list
+    measures = Recipe.measures.keys.sort
+    render json: measures
+  end
   # GET /recipes
   def index
     @recipes = Recipe.all
