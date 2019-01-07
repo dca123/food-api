@@ -33,7 +33,7 @@ class RecipesController < ApplicationController
     if @recipe.update(recipe_params)
       render json: @recipe
     else
-      render json: @recipe.errors, status: :unprocessable_entity
+      render json: error_jsonapi(@recipe), status: :unprocessable_entity
     end
   end
 

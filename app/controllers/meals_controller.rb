@@ -48,7 +48,7 @@ class MealsController < ApplicationController
     if @meal.update(meal_params)
       render json: @meal
     else
-      render json: @meal.errors, status: :unprocessable_entity
+      render json: error_jsonapi(@meal), status: :unprocessable_entity
     end
   end
 
