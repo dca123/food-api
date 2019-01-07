@@ -4,6 +4,7 @@ class Meal < ApplicationRecord
 
   validates_presence_of :name
   validates_presence_of :serves
+  validates_presence_of :category
 
   validates_uniqueness_of :name
 
