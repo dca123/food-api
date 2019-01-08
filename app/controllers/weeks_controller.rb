@@ -6,15 +6,17 @@ class WeeksController < ApplicationController
     shoppingList = Hash.new
     Ingredient.locations.each_key do |location|
       shoppingList[location] = Hash.new
+      Ingredient.categories.each_key do |key|
+        shoppingList[location][key] = Hash.new
+      end
     end
     @week.menus.each do |menu|
       menu.meal.recipes.each do |recipe|
         ingredient = recipe.ingredient
-        if shoppingList[ingredient.location].key?(ingredient.name)
+        puts ingredient.category
+        if shoppingList[ingredient.location][ingredient.category].key?(ingredient.name)
           added = false
-          shoppingList[ingredient.location][ingredient.name].each do |quant|
-            puts quant[:measure]
-            puts recipe.measure
+          shoppingList[ingredient.location][ingredient.category][ingredient.name].each do |quant|
             if quant[:measure] == recipe.measure
               quant[:quantity] += recipe.quantity
               added = true
@@ -24,16 +26,16 @@ class WeeksController < ApplicationController
             data = Hash.new
             data[:quantity] = recipe.quantity
             data[:measure] = recipe.measure
-            shoppingList[ingredient.location][ingredient.name].push(data)
+            shoppingList[ingredient.location][ingredient.category][ingredient.name].push(data)
           end
         else
-          shoppingList[ingredient.location][ingredient.name] = []
+          shoppingList[ingredient.location][ingredient.category][ingredient.name] = []
           data = Hash.new
           data[:quantity] = recipe.quantity
           data[:measure] = recipe.measure
-          shoppingList[ingredient.location][ingredient.name].push(data)
+          shoppingList[ingredient.location][ingredient.category][ingredient.name].push(data)
         end
-        shoppingList[ingredient.location] = shoppingList[ingredient.location].sort.to_h
+        shoppingList[ingredient.location][ingredient.category] = shoppingList[ingredient.location][ingredient.category].sort.to_h
       end
     end
     render json: shoppingList

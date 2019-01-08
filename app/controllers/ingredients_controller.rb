@@ -2,7 +2,7 @@ class IngredientsController < ApplicationController
   before_action :set_ingredient, only: [:show, :update, :destroy]
 
   def category
-    category_list = Ingredient.categories.keys.sort
+    category_list = Ingredient.categories.keys
     render json: category_list
   end
   #GET /ingredients/list
@@ -55,6 +55,6 @@ class IngredientsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def ingredient_params
-      ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:name, :location])
+      ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:name, :location, :category])
     end
 end
