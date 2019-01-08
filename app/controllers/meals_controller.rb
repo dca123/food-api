@@ -1,7 +1,12 @@
 class MealsController < ApplicationController
   before_action :set_meal, only: [:show, :update, :destroy]
 
-  #GET /meals/list
+  def category
+    list = Meal.categories.keys.sort
+    render json: list
+  end
+
+  #GET List of meals by category
   def list
     categories = Meal.distinct.pluck(:category)
     meal_list = []

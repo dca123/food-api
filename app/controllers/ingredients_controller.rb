@@ -2,7 +2,7 @@ class IngredientsController < ApplicationController
   before_action :set_ingredient, only: [:show, :update, :destroy]
 
   def category
-    category_list = Ingredient.categories.keys
+    category_list = Ingredient.categories.keys.sort
     render json: category_list
   end
   #GET /ingredients/list
