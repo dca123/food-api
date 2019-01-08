@@ -1,6 +1,10 @@
 class IngredientsController < ApplicationController
   before_action :set_ingredient, only: [:show, :update, :destroy]
 
+  def category
+    category_list = Ingredient.categories.keys.sort
+    render json: category_list
+  end
   #GET /ingredients/list
   def list
     list = Ingredient.distinct.select(:id, :name).order(:name).to_json

@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2019_01_08_105132) do
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
     t.integer "location"
+    t.integer "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_ingredients_on_name", unique: true
