@@ -26,6 +26,7 @@ class WeeksController < ApplicationController
             data = Hash.new
             data[:quantity] = recipe.quantity
             data[:measure] = recipe.measure
+            data[:notes] = recipe.notes
             shoppingList[ingredient.location][ingredient.category][ingredient.name].push(data)
           end
         else
@@ -33,6 +34,7 @@ class WeeksController < ApplicationController
           data = Hash.new
           data[:quantity] = recipe.quantity
           data[:measure] = recipe.measure
+          data[:notes] = recipe.notes
           shoppingList[ingredient.location][ingredient.category][ingredient.name].push(data)
         end
         shoppingList[ingredient.location][ingredient.category] = shoppingList[ingredient.location][ingredient.category].sort.to_h
