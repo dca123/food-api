@@ -50,6 +50,6 @@ class RecipesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def recipe_params
-      ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:meal, :ingredient, :quantity, :measure])
+      ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:meal, :ingredient, :quantity, :measure, :notes])
     end
 end

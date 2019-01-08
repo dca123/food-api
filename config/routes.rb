@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :receipts
   resources :weeks do
     get 'shopping_list', on: :member
   end

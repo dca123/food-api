@@ -5,6 +5,7 @@ class CreateRecipes < ActiveRecord::Migration[5.2]
       t.references :ingredient, foreign_key: true
       t.integer :quantity
       t.integer :measure
+      t.string :notes
 
       t.timestamps
     end

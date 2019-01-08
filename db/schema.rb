@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_21_050617) do
+ActiveRecord::Schema.define(version: 2019_01_08_105132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,11 +45,22 @@ ActiveRecord::Schema.define(version: 2018_12_21_050617) do
     t.index ["week_id"], name: "index_menus_on_week_id"
   end
 
+  create_table "receipts", force: :cascade do |t|
+    t.bigint "week_id"
+    t.integer "location"
+    t.decimal "cost", precision: 6, scale: 2
+    t.string "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["week_id"], name: "index_receipts_on_week_id"
+  end
+
   create_table "recipes", force: :cascade do |t|
     t.bigint "meal_id"
     t.bigint "ingredient_id"
     t.integer "quantity"
     t.integer "measure"
+    t.string "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_recipes_on_ingredient_id"
@@ -72,6 +83,7 @@ ActiveRecord::Schema.define(version: 2018_12_21_050617) do
 
   add_foreign_key "menus", "meals"
   add_foreign_key "menus", "weeks"
+  add_foreign_key "receipts", "weeks"
   add_foreign_key "recipes", "ingredients"
   add_foreign_key "recipes", "meals"
 end

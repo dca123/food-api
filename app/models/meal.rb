@@ -9,7 +9,7 @@ class Meal < ApplicationRecord
 
   validates_uniqueness_of :name
 
-  enum category: [:chicken, :beef, :fish, :pork, :vegetables, :dessert, :na]
+  enum category: [:chicken, :beef, :fish, :pork, :vegetables, :dessert, :turkey, :na, :sides]
   scope :category, -> (category) { where category: category}
 
 end
