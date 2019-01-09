@@ -7,8 +7,8 @@ class Ingredient < ApplicationRecord
 
   validates_uniqueness_of :name
 
-  enum location: [:walmart, :aldi, :other]
-  enum category: [:meat, :dairy, :frozen_goods, :sauce, :seasoning, :dry_goods, :soup, :fresh_produce, :na]
+  enum location: Settings.ingredient.location
+  enum category: Settings.ingredient.category
 
   scope :location, -> (location) {where location: location}
   scope :category, -> (category) {where category: category}

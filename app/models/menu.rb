@@ -6,8 +6,8 @@ class Menu < ApplicationRecord
 
   validates_uniqueness_of :meal_id, scope: [:week_id, :day, :meal_time]
 
-  enum day: [:monday, :tuesday, :wednesday, :thursday, :friday]
-  enum meal_time: [:lunch, :dinner]
+  enum day: Settings.days
+  enum meal_time: Settings.meal_time
 
   scope :week, ->(week_id) {where week_id: week_id}
 end

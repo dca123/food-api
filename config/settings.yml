@@ -1,0 +1,8 @@
+ingredient:
+  category: [meat, dairy, frozen_goods, sauce, seasoning, dry_goods, soup, fresh_produce, na]
+  location: [walmart, aldi, other]
+meal:
+  category: [chicken, beef, fish, pork, vegetables, dessert, turkey, na, sides]
+units: [teaspoon, tablespoon, fluid_ounce, cup, quart, litre, gallon, packet, box, pound, ounce, gram, package, bag, bottle, piece, can, jar, unit, container, loaf]
+days: [monday, tuesday, wednesday, thursday, friday]
+meal_time: [lunch, dinner]
