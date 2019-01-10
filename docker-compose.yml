@@ -1,13 +1,17 @@
 version: "2"
 
+volumes:
+  db-data:
+    external: false
+
 services:
   db:
-   environment:
-     POSTGRES_USER:
-     POSTGRES_PASSWORD:
-      image: postgres:9.5
-      volumes:
-        - db-data:/usr/local/pgsql/data
+    environment:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+    image: postgres:9.5
+    volumes:
+      - db-data:/usr/local/pgsql/data
 
   app:
    build: .
