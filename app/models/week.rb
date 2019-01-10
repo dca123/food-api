@@ -1,6 +1,5 @@
 class Week < ApplicationRecord
   has_many :menus, dependent: :destroy
-  has_many :receipts, dependent: :destroy
   scope :month, ->(month) {where month: month}
   scope :year, ->(year) {where year: year}
   scope :week_of, ->(week_of, month, year) {where week_of: week_of, month: month, year: year}

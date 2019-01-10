@@ -13,6 +13,7 @@ class WeeksController < ApplicationController
     @week.menus.each do |menu|
       menu.meal.recipes.each do |recipe|
         ingredient = recipe.ingredient
+        puts ingredient.category
         if shoppingList[ingredient.location][ingredient.category].key?(ingredient.name)
           added = false
           shoppingList[ingredient.location][ingredient.category][ingredient.name].each do |quant|
