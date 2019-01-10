@@ -10,12 +10,11 @@ services:
         - db-data:/usr/local/pgsql/data
 
   app:
-   env_file: .env
-      build: .
-      volumes:
-     - .:/usr/src/app
-      ports:
-        - "8080:8080"
-      depends_on:
-        - db
-        - cache
+   build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
