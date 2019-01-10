@@ -8,6 +8,13 @@
 #   adapter: sqlite3
 #   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 #   timeout: 5000
+default: &default
+   adapter: postgresql
+   encoding: unicode
+   host: db
+   username: postgres
+   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+   timeout: 5000
 
 development:
   adapter: postgresql
@@ -16,14 +23,14 @@ development:
   password: AdeptBalkan
   pool: 5
   timeout: 5000
-test:
-  adapter: postgresql
-  database: my_database_test
-  pool: 5
-  timeout: 5000
-
-production:
-  adapter: postgresql
-  database: my_database_production
-  pool: 5
-  timeout: 5000
+# test:
+#   adapter: postgresql
+#   database: my_database_test
+#   pool: 5
+#   timeout: 5000
+#
+# production:
+#   adapter: postgresql
+#   database: my_database_production
+#   pool: 5
+#   timeout: 5000
