@@ -3,6 +3,7 @@ class WeeksController < ApplicationController
 
   def shopping_list
     @week = Week.find(params[:id])
+    servingSize = params[:servingSize].to_f
     shoppingList = Hash.new
     Ingredient.locations.each_key do |location|
       shoppingList[location] = Hash.new
@@ -11,20 +12,22 @@ class WeeksController < ApplicationController
       end
     end
     @week.menus.each do |menu|
-      menu.meal.recipes.each do |recipe|
+      meal = menu.meal
+      multiplier = servingSize/meal.serves
+      puts multiplier
+      meal.recipes.each do |recipe|
         ingredient = recipe.ingredient
-        puts ingredient.category
         if shoppingList[ingredient.location][ingredient.category].key?(ingredient.name)
           added = false
           shoppingList[ingredient.location][ingredient.category][ingredient.name].each do |quant|
             if quant[:measure] == recipe.measure
-              quant[:quantity] += recipe.quantity
+              quant[:quantity] += recipe.quantity * multiplier
               added = true
             end
           end
           if !added
             data = Hash.new
-            data[:quantity] = recipe.quantity
+            data[:quantity] = recipe.quantity * multiplier
             data[:measure] = recipe.measure
             data[:notes] = recipe.notes
             shoppingList[ingredient.location][ingredient.category][ingredient.name].push(data)
@@ -32,7 +35,7 @@ class WeeksController < ApplicationController
         else
           shoppingList[ingredient.location][ingredient.category][ingredient.name] = []
           data = Hash.new
-          data[:quantity] = recipe.quantity
+          data[:quantity] = recipe.quantity * multiplier
           data[:measure] = recipe.measure
           data[:notes] = recipe.notes
           shoppingList[ingredient.location][ingredient.category][ingredient.name].push(data)
