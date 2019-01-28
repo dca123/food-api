@@ -47,7 +47,7 @@ class WeeksController < ApplicationController
   end
 
   def list
-    years = ['All', Week.distinct.pluck(:year).map(&:to_s)].flatten
+    years = Week.distinct.pluck(:year).map(&:to_s)
     render json: years
   end
 
@@ -64,7 +64,11 @@ class WeeksController < ApplicationController
 
   # GET /weeks/1
   def show
-    render json: @week
+    if params[:include]
+      render json: @week, include: ['receipts']
+    else
+      render json: @week
+    end
   end
 
   # POST /weeks

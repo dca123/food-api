@@ -4,8 +4,7 @@ class ReceiptsController < ApplicationController
   # GET /receipts
   def index
     @receipts = Receipt.all
-
-    render json: @receipts
+    render json: @receipts, include: ['week']
   end
 
   # GET /receipts/1
@@ -18,9 +17,11 @@ class ReceiptsController < ApplicationController
     @receipt = Receipt.new(receipt_params)
 
     if @receipt.save
+      week = @receipt.week
+      week.update(cost: week.cost + @receipt.cost)
       render json: @receipt, status: :created, location: @receipt
     else
-      render json: @receipt.errors, status: :unprocessable_entity
+      render json: error_jsonapi(@receipt), status: :unprocessable_entity
     end
   end
 
@@ -35,7 +36,11 @@ class ReceiptsController < ApplicationController
 
   # DELETE /receipts/1
   def destroy
-    @receipt.destroy
+    week = @receipt.week
+    cost = @receipt.cost
+    if @receipt.destroy
+      week.update(cost: week.cost - cost)
+    end
   end
 
   private
@@ -46,6 +51,6 @@ class ReceiptsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def receipt_params
-      params.require(:receipt).permit(:week_id, :location, :cost, :cost, :notes)
+      ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:week, :location, :cost, :notes])
     end
 end
