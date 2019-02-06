@@ -46,11 +46,6 @@ class WeeksController < ApplicationController
     render json: shoppingList
   end
 
-  def list
-    years = Week.distinct.pluck(:year).map(&:to_s)
-    render json: years
-  end
-
   # GET /weeks
   def index
     @weeks = Week.where(nil)
@@ -59,7 +54,7 @@ class WeeksController < ApplicationController
     end
     @weeks = @weeks.month(params[:month]) if params[:month].present?
     @weeks = @weeks.year(params[:year]) if params[:year].present?
-    render json: @weeks.order(year: :desc, month: :desc, week_of: :desc)
+    render json: @weeks.order(semester_id: :desc, month: :desc, week_of: :desc)
   end
 
   # GET /weeks/1
@@ -73,13 +68,17 @@ class WeeksController < ApplicationController
 
   # POST /weeks
   def create
-    @week = Week.new(week_params)
-
-    if @week.save
-      render json: @week, status: :created, location: @week
+    if !Semester.current #Checks if current Semester is invlid
+      render json: {errors: [0, "The current semester doesn't exist, would you like to create one ?"]}, status: :unprocessable_entity
     else
-      @correct_week = Week.week_of(week_params[:week_of], week_params[:month], week_params[:year])
-      render json: {errors: [@week.errors.to_h, {week_id: @correct_week.take.id}]}, status: :unprocessable_entity
+      # @week = Week.new(week_params.merge(semester: Semester.current))
+      # if @week.save
+      #   render json: @week, status: :created, location: @week
+      # else
+      #   @correct_week = Week.week_of(week_params[:week_of], Semester.last.id)
+      #   puts "correct_week #{@week.errors.to_h}"
+      #   render json: {errors: [@week.errors.to_h, {week_id: @correct_week.take.id}]}, status: :unprocessable_entity
+      # end
     end
   end
 
@@ -105,6 +104,6 @@ class WeeksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def week_params
-      ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:week_of, :year, :month, :cost] )
+      ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:week_of, :month] )
     end
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :semesters
   resources :receipts
   resources :weeks do
     get 'shopping_list', on: :member
@@ -8,7 +9,7 @@ Rails.application.routes.draw do
   resources :ingredients
   resources :recipes
   get 'meal_list', to: 'meals#list'
-  get 'year_list', to: 'weeks#list'
+  get 'year_list', to: 'semesters#list'
   get 'ingredient_list', to: 'ingredients#list'
   get 'measure_list', to: 'recipes#list'
   get 'ingredient_category_list', to: 'ingredients#category'

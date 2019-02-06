@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_28_212944) do
+ActiveRecord::Schema.define(version: 2019_02_06_061716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,17 +69,25 @@ ActiveRecord::Schema.define(version: 2019_01_28_212944) do
     t.index ["meal_id"], name: "index_recipes_on_meal_id"
   end
 
-  create_table "weeks", force: :cascade do |t|
-    t.integer "week_of"
-    t.integer "year"
-    t.integer "month"
-    t.decimal "cost", precision: 6, scale: 2, default: "0.0"
+  create_table "semesters", force: :cascade do |t|
+    t.string "name"
+    t.decimal "budget", precision: 8, scale: 2
+    t.boolean "spring"
+    t.date "start"
+    t.date "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "weeks", force: :cascade do |t|
+    t.integer "week_of"
+    t.integer "month"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "semester_id"
     t.index ["month"], name: "index_weeks_on_month"
-    t.index ["week_of", "year"], name: "index_weeks_on_week_of_and_year", unique: true
+    t.index ["semester_id"], name: "index_weeks_on_semester_id"
     t.index ["week_of"], name: "index_weeks_on_week_of"
-    t.index ["year"], name: "index_weeks_on_year"
   end
 
   add_foreign_key "menus", "meals"
@@ -87,4 +95,5 @@ ActiveRecord::Schema.define(version: 2019_01_28_212944) do
   add_foreign_key "receipts", "weeks"
   add_foreign_key "recipes", "ingredients"
   add_foreign_key "recipes", "meals"
+  add_foreign_key "weeks", "semesters"
 end
