@@ -20,10 +20,11 @@ capable of creating a menu and shopping list within minutes.
 + Create week menus a week in advance.
 + Create, Edit, Delete Meals from the database along with ingredients
 + Generate Shopping lists ordered by location and type of ingredient, i.e 'meat', dairy
-
-## Proposed Features
 + Add Receipts to the weeks
 + Keep Track of Finances
++Semester Finance Tracking
+
+## Proposed Features
 + Finance UI
 
 ***
