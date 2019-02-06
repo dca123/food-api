@@ -22,7 +22,7 @@ capable of creating a menu and shopping list within minutes.
 + Generate Shopping lists ordered by location and type of ingredient, i.e 'meat', dairy
 + Add Receipts to the weeks
 + Keep Track of Finances
-+Semester Finance Tracking
++ Semester Finance Tracking
 
 ## Proposed Features
 + Finance UI
