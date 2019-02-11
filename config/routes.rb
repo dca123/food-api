@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :meals
   resources :ingredients
   resources :recipes
+  get 'report', to: 'weeks#report'
   get 'meal_list', to: 'meals#list'
   get 'year_list', to: 'semesters#list'
   get 'ingredient_list', to: 'ingredients#list'

@@ -1,6 +1,36 @@
 class WeeksController < ApplicationController
   before_action :set_week, only: [:show, :update, :destroy]
 
+  def report
+    report = Hash.new
+    currentSemester = Semester.current
+    currentDate = Date.current
+    if currentSemester
+      report[:usage] = (currentSemester.total.to_f/currentSemester.budget.to_f * 100).round(2)
+      semesterWeeks = currentSemester.weeks.order(:id)
+
+      report[:current] = semesterWeeks.last ? semesterWeeks.last.cost : nil
+      report[:last] = semesterWeeks.second_to_last ? semesterWeeks.second_to_last.cost : nil
+      report[:budget] = currentSemester.budget
+
+      report[:weeksChart] = Hash.new
+      report[:weeksChart][:cost] = Array.new
+      report[:weeksChart][:label] = Array.new
+      semesterWeeks.each do |week|
+        report[:weeksChart][:label].push "#{week.week_of}/#{week.month}/#{week.semester.start.year}"
+        report[:weeksChart][:cost].push week.cost
+      end
+
+      report[:cumalativeChart] = Hash.new
+      report[:cumalativeChart][:cost] = Array.new
+      report[:cumalativeChart][:label] = Array.new
+      semesterWeeks.each_with_index do |week, index|
+        report[:cumalativeChart][:label].push "#{week.week_of}/#{week.month}/#{week.semester.start.year}"
+        report[:cumalativeChart][:cost].push index == 0 ? week.cost : week.cost + report[:cumalativeChart][:cost][index-1]
+      end
+    end
+    render json: report
+  end
   def shopping_list
     @week = Week.find(params[:id])
     servingSize = params[:servingSize].to_f
@@ -53,7 +83,11 @@ class WeeksController < ApplicationController
       @weeks = @weeks.page(params[:page][:number]).per(params[:page][:size])
     end
     @weeks = @weeks.month(params[:month]) if params[:month].present?
-    @weeks = @weeks.year(params[:year]) if params[:year].present?
+    if params[:year].present?
+      semesters = Semester.where(start: Date.new(params[:year].to_i,1,1)..Date.new(params[:year].to_i,12,31)).pluck(:id)
+      puts semesters
+      @weeks = @weeks.where(semester_id: semesters)
+    end
     render json: @weeks.order(semester_id: :desc, month: :desc, week_of: :desc)
   end
 

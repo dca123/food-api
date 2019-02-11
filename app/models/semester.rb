@@ -2,7 +2,8 @@ class Semester < ApplicationRecord
   has_many :weeks, dependent: :destroy
   #TODO make spring and year unique
   def self.current
-    lastRecord = Semester.last
+    lastRecord = Semester.first
+    return lastRecord
     currentDate = Date.current
     if lastRecord && (lastRecord.start.year == currentDate.year) && ((lastRecord.spring? && currentDate.month >=1 && currentDate.month <=5) ||  (!lastRecord.spring? && currentDate.month >=8 && currentDate.month <=12))
       Semester.last
@@ -12,5 +13,8 @@ class Semester < ApplicationRecord
   end
   def total
     self.weeks.map(&:cost).sum
+  end
+  def year
+    self.start.year
   end
 end
