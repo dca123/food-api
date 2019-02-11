@@ -38,7 +38,6 @@ class ReceiptsController < ApplicationController
     week = @receipt.week
     cost = @receipt.cost
     if @receipt.destroy
-      week.update(cost: week.cost - cost)
     end
   end
 
