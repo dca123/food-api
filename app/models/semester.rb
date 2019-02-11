@@ -10,8 +10,7 @@ class Semester < ApplicationRecord
 
   #TODO make spring and year unique
   def self.current
-    lastRecord = Semester.first
-    return lastRecord
+    lastRecord = Semester.last
     currentDate = Date.current
     if lastRecord && (lastRecord.start.year == currentDate.year) && ((lastRecord.spring? && currentDate.month >=1 && currentDate.month <=5) ||  (!lastRecord.spring? && currentDate.month >=8 && currentDate.month <=12))
       Semester.last
