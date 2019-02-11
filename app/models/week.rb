@@ -4,7 +4,7 @@ class Week < ApplicationRecord
   belongs_to :semester
   scope :month, ->(month) {where month: month}
   scope :week_of, ->(week_of, semester_id) {where week_of: week_of, semester_id: semester_id }
-  # validates_uniqueness_of :week_of, scope: :semester_id, message: 'This week already exists, Would you like to edit it instead ?'
+  validates_uniqueness_of :week_of, scope: [:month, :semester_id], message: 'This week already exists, Would you like to edit it instead ?'
   def cost
     self.receipts.pluck(:cost).sum
   end

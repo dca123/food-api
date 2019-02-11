@@ -44,7 +44,6 @@ class WeeksController < ApplicationController
     @week.menus.each do |menu|
       meal = menu.meal
       multiplier = servingSize/meal.serves
-      puts multiplier
       meal.recipes.each do |recipe|
         ingredient = recipe.ingredient
         if shoppingList[ingredient.location][ingredient.category].key?(ingredient.name)
@@ -105,14 +104,13 @@ class WeeksController < ApplicationController
     if !Semester.current #Checks if current Semester is invlid
       render json: {errors: [0, "The current semester doesn't exist, would you like to create one ?"]}, status: :unprocessable_entity
     else
-      # @week = Week.new(week_params.merge(semester: Semester.current))
-      # if @week.save
-      #   render json: @week, status: :created, location: @week
-      # else
-      #   @correct_week = Week.week_of(week_params[:week_of], Semester.last.id)
-      #   puts "correct_week #{@week.errors.to_h}"
-      #   render json: {errors: [@week.errors.to_h, {week_id: @correct_week.take.id}]}, status: :unprocessable_entity
-      # end
+      @week = Week.new(week_params.merge(semester: Semester.current))
+      if @week.save
+        render json: @week, status: :created, location: @week
+      else
+        @correct_week = Week.week_of(week_params[:week_of], Semester.last.id)
+        render json: {errors: [1, @week.errors.to_h, {week_id: @correct_week.take.id}]}, status: :unprocessable_entity
+      end
     end
   end
 

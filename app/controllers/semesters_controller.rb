@@ -21,17 +21,17 @@ class SemestersController < ApplicationController
   # POST /semesters
   def create
     if !Semester.current
+      semester_params[:start] =  Date.parse(semester_params[:start]).beginning_of_week if params[:start].present?
+      semester_params[:end] =  Date.parse(semester_params[:end]).beginning_of_week if params[:end].present?
       @semester = Semester.new(semester_params)
       if @semester.save
         render json: @semester, status: :created, location: @semester
       else
-        render json: @semester.errors, status: :unprocessable_entity
+        render json: error_jsonapi(@semester), status: :unprocessable_entity
       end
     else
-      render json: {errors: [Semester.current.id, "There is a current Semester in use, would you like to edit that instead ?"]}, status: :unprocessable_entity
+      render json: {errors: [0, Semester.current.id, "There is a current Semester in use, would you like to edit that instead ?"]}, status: :unprocessable_entity
     end
-
-
   end
 
   # PATCH/PUT /semesters/1

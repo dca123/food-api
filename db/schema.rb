@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_06_061716) do
+ActiveRecord::Schema.define(version: 2019_02_11_070551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 2019_02_06_061716) do
     t.bigint "semester_id"
     t.index ["month"], name: "index_weeks_on_month"
     t.index ["semester_id"], name: "index_weeks_on_semester_id"
+    t.index ["week_of", "month", "semester_id"], name: "index_weeks_on_week_of_and_month_and_semester_id", unique: true
     t.index ["week_of"], name: "index_weeks_on_week_of"
   end
 

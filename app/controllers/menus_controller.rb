@@ -14,8 +14,6 @@ class MenusController < ApplicationController
 
   # GET /menus/1
   def show
-    puts params
-
     render json: @menu
   end
 

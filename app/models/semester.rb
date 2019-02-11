@@ -1,5 +1,13 @@
 class Semester < ApplicationRecord
   has_many :weeks, dependent: :destroy
+  validates_numericality_of :budget, { greater_than: 0, message: "must be greater than $0 !"}
+  validates_presence_of :budget
+  validates_presence_of :name
+  validates_presence_of :start
+  validates_presence_of :end
+  validates_presence_of :spring, message: ' / Fall cannot be blank !'
+
+
   #TODO make spring and year unique
   def self.current
     lastRecord = Semester.first
