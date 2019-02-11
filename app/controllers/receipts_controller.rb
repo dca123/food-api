@@ -18,7 +18,6 @@ class ReceiptsController < ApplicationController
 
     if @receipt.save
       week = @receipt.week
-      week.update(cost: week.cost + @receipt.cost)
       render json: @receipt, status: :created, location: @receipt
     else
       render json: error_jsonapi(@receipt), status: :unprocessable_entity
