@@ -84,6 +84,6 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {
     api_key: ENV["RAILGUN_API"],
-    domain: 'ENV["RAILGUN_DOMAIN"],
+    domain: ENV["RAILGUN_DOMAIN"],
   }
 end
