@@ -6,3 +6,4 @@ meal:
 units: [teaspoon, tablespoon, fluid_ounce, cup, quart, litre, gallon, packet, box, pound, ounce, gram, package, bag, bottle, piece, can, jar, unit, container, loaf]
 days: [monday, tuesday, wednesday, thursday, friday]
 meal_time: [lunch, dinner]
+treasurer: treasurer@rolladelts.org

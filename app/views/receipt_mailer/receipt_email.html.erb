@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  </head>
+  <body>
+    <h1>New Receipt at
+      <%= @receipt.location.capitalize %></h1>
+    <h3>Receipt ID:
+      <%= @receipt.id %></h3>
+    <p>
+      A receipt was claimed by the Food committee for
+      <b>$<%= @receipt.cost %></b>
+    </p>
+    <% unless @receipt.notes.empty? %>
+      <p><%= @receipt.notes%></p>
+    <% end %>
+    <p>
+      ΔΤΔ Food App
+      <br/>
+      <%= @today %>
+    </p>
+  </body>
+</html>

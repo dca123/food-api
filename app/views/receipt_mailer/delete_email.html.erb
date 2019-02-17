@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  </head>
+  <body>
+    <h1>Deleted Receipt for
+      <%= @receipt.location.capitalize %></h1>
+    <h3>Receipt ID:
+      <%= @receipt.id %></h3>
+    <p>
+      A receipt was deleted by the Food committee for
+      <b>$<%= @receipt.cost %></b>
+    </p>
+    <p>This might've been an incorrect entry, please contact the Food Committee to ensure that this deletion was made.</p>
+    <p>
+      ΔΤΔ Food App
+      <br/>
+      <%= @today %>
+    </p>
+  </body>
+</html>
