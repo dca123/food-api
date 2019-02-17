@@ -17,7 +17,7 @@ class ReceiptsController < ApplicationController
     @receipt = Receipt.new(receipt_params)
 
     if @receipt.save
-      week = @receipt.week
+      ReceiptMailer.receipt_email(@receipt).deliver_later
       render json: @receipt, status: :created, location: @receipt
     else
       render json: error_jsonapi(@receipt), status: :unprocessable_entity
@@ -35,8 +35,7 @@ class ReceiptsController < ApplicationController
 
   # DELETE /receipts/1
   def destroy
-    week = @receipt.week
-    cost = @receipt.cost
+    ReceiptMailer.delete_email(@receipt).deliver_now
     if @receipt.destroy
     end
   end

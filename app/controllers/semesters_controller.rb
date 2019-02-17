@@ -21,8 +21,8 @@ class SemestersController < ApplicationController
   # POST /semesters
   def create
     if !Semester.current
-      semester_params[:start] =  Date.parse(semester_params[:start]).beginning_of_week if params[:start].present?
-      semester_params[:end] =  Date.parse(semester_params[:end]).beginning_of_week if params[:end].present?
+      semester_params[:start] = Date.parse(semester_params[:start]).beginning_of_week if semester_params[:start].present?
+      semester_params[:end] =  Date.parse(semester_params[:end]).end_of_week if semester_params[:end].present?
       @semester = Semester.new(semester_params)
       if @semester.save
         render json: @semester, status: :created, location: @semester

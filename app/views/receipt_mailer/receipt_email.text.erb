@@ -1,0 +1,8 @@
+New Receipt at <%= @receipt.location.capitalize %>
+Receipt ID: <%= @receipt.id %>
+A receipt was claimed by the food committee for $<%= @receipt.cost %>
+ΔΤΔ Food App
+<%= @today %>
+<% unless @receipt.notes.empty? %>
+  @receipt.notes
+<% end %>
