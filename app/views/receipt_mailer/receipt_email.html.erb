@@ -12,7 +12,7 @@
       A receipt was claimed by the Food committee for
       <b>$<%= @receipt.cost %></b>
     </p>
-    <% unless @receipt.notes.empty? %>
+    <% unless @receipt.notes.nil? %>
       <p><%= @receipt.notes%></p>
     <% end %>
     <p>

@@ -3,6 +3,6 @@ Receipt ID: <%= @receipt.id %>
 A receipt was claimed by the food committee for $<%= @receipt.cost %>
 ΔΤΔ Food App
 <%= @today %>
-<% unless @receipt.notes.empty? %>
+<% unless @receipt.notes.nil? %>
   @receipt.notes
 <% end %>
