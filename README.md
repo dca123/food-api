@@ -1,4 +1,4 @@
-![Meal Manager](https://i.imgur.com/xJGRXRS.png)
+![Meal Manager](https://i.imgur.com/PRPO2JL.png)
 ---
 # Table of Contents
 - [Problem](#problem)
