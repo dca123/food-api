@@ -24,7 +24,7 @@ This repo contains the backend API used by the meal manager. It is a RESTful API
 - [Ruby on Rails](https://rubyonrails.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 # Usage
-1. Install dependenciens
+1. Install dependencies
 ```ruby
 bundle install
 ```
